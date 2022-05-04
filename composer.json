@@ -1,0 +1,19 @@
+{
+    "name": "tranhuq/weather-package",
+    "description": "PHP wrapper for openweather api",
+    "type": "project",
+    "license": "MIT",
+    "autoload": {
+        "psr-4": {
+            "Tranhuq\\WeatherPackage\\": "src/"
+        }
+    },
+    "authors": [
+        {
+            "name": "Nero Tran Huu",
+            "email": "tranhuq@miamioh.edu"
+        }
+    ],
+    "minimum-stability": "stable",
+    "require": {}
+}
