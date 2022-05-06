@@ -17,5 +17,11 @@
     "minimum-stability": "stable",
     "require": {
         "guzzlehttp/guzzle": "^7.4"
+    },
+    "repositories": [
+    {
+     "type": "vcs",
+     "url": "https://github.com/nerotran/weatherPackage" 
     }
+]
 }
