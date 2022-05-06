@@ -19,7 +19,15 @@ class WeatherDay {
 }
 
 class OpenWeatherClient {
-	private $APIKEY = "af1cd69fc96aadd957673c16e25d2c5e";
+	private $APIKEY;
+
+	/**
+     * Creates a new OpenWeatherClient.
+     */
+    public function __construct($apiKey)
+    {
+        $this->APIKEY = $apiKey;
+    }
 
 	public function getCurrentWeather($location){
 		$wd = new WeatherDay;
@@ -61,7 +69,31 @@ class OpenWeatherClient {
         $lon = $jbody[0]->lon;
         $lat = $jbody[0]->lat;
 
-        $uri = "http://api.openweathermap.org/data/2.5/air_pollution?lat=$lat&lon=$lon&appid=$APIKEY";
+        $uri = "http://api.openweathermap.org/data/2.5/weather?lat=$lat&lon=$lon&units=imperial&appid=$APIKEY";
+
+        $client = new Client([
+            // Base URI is used with relative requests
+            'base_uri' => $uri,
+            // You can set any number of default request options.
+            'timeout'  => 2.0,
+        ]);
+
+        try {
+            $response = $client->request('GET','');
+        } catch (Exception $e) {
+          error_log($e);
+        }
+        $body = (string) $response->getBody();
+        $jbody = json_decode($body);
+        if (!$jbody) {
+          error_log("no json");
+        }
+
+        $wd->unit = "Imperial";
+        $wd->temperature = $jbody->main->temp;
+        $wd->feelslike = $jbody->main->feels_like;
+        $wd->pressure = $jbody->main->pressure;
+        $wd->humidity = $jbody->main->humidity;
 
 		return $wd;
 	}
